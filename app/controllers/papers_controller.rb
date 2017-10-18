@@ -1,21 +1,20 @@
 class PapersController < ApplicationController
   before_action :find_paper, only:[:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
   def index
     # @papers = Paper.where(user_id: current_user)
-    @papers = Paper.all
+    @papers = Paper.where(user_id: current_user)
   end
 
   def show
   end
 
   def new
-    # @paper = current_user.papers.build
-    @paper = Paper.new
+    @paper = current_user.papers.build
   end
 
   def create
-    # @paper = current_user.papers.build(paper_params)
-    @paper = Paper.new(paper_params)
+    @paper = current_user.papers.build(paper_params)
     if @paper.save
       redirect_to @paper
     else
