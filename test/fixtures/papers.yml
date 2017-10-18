@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  author: MyText
+  contact: MyString
+  format: MyString
+  isInReview: false
+  isAccepted: false
+
+two:
+  name: MyString
+  author: MyText
+  contact: MyString
+  format: MyString
+  isInReview: false
+  isAccepted: false
