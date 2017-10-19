@@ -34,7 +34,8 @@ gem 'simple_form'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
 gem 'devise'
-
+gem "cocoon"
+gem 'paperclip'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -26,5 +26,15 @@
     %p{:class => "card-text", style:"padding:20px"}
       Format:
       =(@paper.format)
+    - if @paper.versions.any?
+      %h3 Versions
+      %ul{class: "list-group list-group-flush"}
+        - @paper.versions.each do |ver|
+          %li{class: "list-group-item"}
+            =link_to ver.name + "   ( " + ver.document_file_name + " )", ver.document.url
+    -else
+      %p{class: "badge badge-info"} No versions yet. 
+    %br/
+    %br/
     =link_to :Edit, edit_paper_path, class: "btn btn-primary"
     =link_to "Back", papers_path, class: "btn btn-primary"
