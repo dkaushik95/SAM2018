@@ -3,15 +3,15 @@
 one:
   name: MyString
   author: MyText
-  isInReview: false
-  isAccepted: false
   contact: MyString
   format: MyString
+  isInReview: false
+  isAccepted: false
 
 two:
   name: MyString
   author: MyText
-  isInReview: false
-  isAccepted: false
   contact: MyString
   format: MyString
+  isInReview: false
+  isAccepted: false

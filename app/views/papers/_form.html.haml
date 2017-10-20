@@ -3,4 +3,14 @@
   = f.input :author
   = f.input :contact
   = f.input :format
-  = f.button :submit
+  %hr/
+  %h3 Versions
+  #versions
+    = f.simple_fields_for :versions do |ver|
+      %hr/
+      = render 'version_fields', f: ver
+    .links
+      = link_to_add_association 'add version', f, :versions
+
+  %hr/
+  = f.button :submit, class: "btn btn-success"
