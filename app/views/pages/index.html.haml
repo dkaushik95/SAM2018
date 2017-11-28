@@ -3,4 +3,7 @@
     %h1 This is SAM2018
     %p A web based paper submission and review system for "Software Architecture Mining" for the International Software Engineering Conference
     %span -June2018
-    = link_to "See my submissions", papers_path
+    - if current_user
+      = link_to "See my dashboard", papers_path
+    -else
+      = link_to "Login to see my dashboard", new_user_session_path

@@ -1,6 +1,9 @@
 class PapersController < ApplicationController
   before_action :find_paper, only:[:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action do 
+    redirect_to new_user_session_path unless current_user && current_user.author?
+  end
   # validates :attachment, :attachment_content_type => { :content_type => ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']}
 
   def index
