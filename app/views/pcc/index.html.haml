@@ -1,0 +1,10 @@
+%h1
+	PCC Dashboard
+
+%h2
+	All Papers
+
+%ul
+	-@papers.each do |paper|
+		%li
+			=link_to paper.name, pcc_show_paper_path(:id => paper.id)

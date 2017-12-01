@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'pcc/index'
+  get 'pcc/show_paper'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   get 'pages/index'

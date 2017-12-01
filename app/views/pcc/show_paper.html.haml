@@ -1,0 +1,36 @@
+%h1{style: "text-align:center"}=@paper.name
+.card{class:"text-left", style: "box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+  .card-header
+    %ul{class: "list-group list-group-flush"}
+      - if not @paper.isInReview?
+        %li{class: "list-group-item"}
+          %span{class:"badge badge-warning"} Paper is in Review
+      -else
+        - if @paper.isAccepted?
+          %li{class: "list-group-item"}
+            %span{class:"badge badge-success"} Paper is Accepted!
+        -else
+          %li{class: "list-group-item"}
+            %span{class:"badge badge-danger"} Paper is Not Accepted
+  .card-block{style: "padding:20px"}
+    %p{:class => "card-text", style:"padding:20px"}
+      Authors:
+      =(@paper.author)
+    %p{:class => "card-text", style:"padding:20px"}
+      Contact:
+      =(@paper.contact)
+    %p{:class => "card-text", style:"padding:20px"}
+      Format:
+      =(@paper.format)
+    - if @paper.versions.any?
+      %h3 Versions
+      %ul{class: "list-group list-group-flush"}
+        - @paper.versions.each do |ver|
+          %li{class: "list-group-item"}
+            =link_to ver.name + "   ( " + ver.document_file_name + " )", ver.document.url
+    -else
+      %p{class: "badge badge-info"} No versions yet. 
+    %br/
+    %br/
+
+    =link_to "Back", :back, class: "btn btn-primary"
