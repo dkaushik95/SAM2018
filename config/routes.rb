@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
+  post 'pcm_controller/request_paper'
+  delete 'pcm_controller/delete_request'
   get 'pcm_controller/index'
   #root "pcm_controller#index"
 

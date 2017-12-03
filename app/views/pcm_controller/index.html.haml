@@ -1,34 +1,34 @@
 %h1
   PCM Homepage
-
-%h2 Papers Assigned to Me to Review
+/ TODO 
+/ %h2 Papers Assigned to Me to Review
+/ %table{class:"table table-striped"}
+/   %tr
+/     %td Author
+/     %td Name
+/     %td
+/   - @paper.each do |row|
+/     %tr
+/       %td
+/         =row.author
+/       %td
+/         =row.name
+/       %td
+/         %button Review
+%h2 Request papers to Review
 %table{class:"table table-striped"}
   %tr
     %td Author
     %td Name
     %td
-  - @paper.each do |row|
+  - @toberequested.each do |row|
     %tr
-      %td
+      %td 
         =row.author
       %td
         =row.name
       %td
-        %button Review
-%h2 Request Papers to Review
-%table{class:"table table-striped"}
-  %tr
-    %td Author
-    %td Name
-    %td
-  - @paper.each do |row|
-    %tr
-      %td
-        =row.author
-      %td
-        =row.name
-      %td
-        %button Request Review
+        =button_to "Request Paper", { action: "request_paper", paper: row}, method: :post
 
 %h2 Papers I Requested To Review
 %table{class:"table table-striped"}
@@ -36,13 +36,11 @@
     %td Author
     %td Name
     %td
-  - @paper.each do |row|
+  - @requested.each do |row|
     %tr
       %td
         =row.author
       %td
         =row.name
       %td
-        %button Delete Review Request
-
-
+        =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}

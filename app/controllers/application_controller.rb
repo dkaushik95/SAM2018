@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   elsif current_user.pcc?
     pcc_path
   elsif current_user.pcm?
-    pcm_path
+    '/pcm_controller/index'
   else
     new_user_path
   end

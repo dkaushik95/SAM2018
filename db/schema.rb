@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127002505) do
+ActiveRecord::Schema.define(version: 20171203193803) do
+
+  create_table "paper_requests", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "paper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "papers", force: :cascade do |t|
     t.string "name"
