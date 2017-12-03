@@ -1,0 +1,48 @@
+%h1
+  PCM Homepage
+
+%h2 Papers Assigned to Me to Review
+%table{class:"table table-striped"}
+  %tr
+    %td Author
+    %td Name
+    %td
+  - @paper.each do |row|
+    %tr
+      %td
+        =row.author
+      %td
+        =row.name
+      %td
+        %button Review
+%h2 Request Papers to Review
+%table{class:"table table-striped"}
+  %tr
+    %td Author
+    %td Name
+    %td
+  - @paper.each do |row|
+    %tr
+      %td
+        =row.author
+      %td
+        =row.name
+      %td
+        %button Request Review
+
+%h2 Papers I Requested To Review
+%table{class:"table table-striped"}
+  %tr
+    %td Author
+    %td Name
+    %td
+  - @paper.each do |row|
+    %tr
+      %td
+        =row.author
+      %td
+        =row.name
+      %td
+        %button Delete Review Request
+
+
