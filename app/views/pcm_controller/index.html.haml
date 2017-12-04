@@ -1,46 +1,52 @@
 %h1
   PCM Homepage
-/ TODO 
-/ %h2 Papers Assigned to Me to Review
-/ %table{class:"table table-striped"}
-/   %tr
-/     %td Author
-/     %td Name
-/     %td
-/   - @paper.each do |row|
-/     %tr
-/       %td
-/         =row.author
-/       %td
-/         =row.name
-/       %td
-/         %button Review
+TODO 
+%h2 Papers Assigned to Me to Review
+%table{class:"table table-striped"}
+  %thead
+    %tr
+      %th Author
+      %th Name
+      %th Action
+  %tbody
+    - @assignments.each do |row|
+      %tr
+        %td
+          =row.author
+        %td
+          =row.name
+        %td
+          %button Review
 %h2 Request papers to Review
 %table{class:"table table-striped"}
-  %tr
-    %td Author
-    %td Name
-    %td
-  - @toberequested.each do |row|
+  %thead
     %tr
-      %td 
-        =row.author
-      %td
-        =row.name
-      %td
-        =button_to "Request Paper", { action: "request_paper", paper: row}, method: :post
+      %th Author
+      %th Name
+      %th Action
+  %tbody
+    - @toberequested.each do |row|
+      %tr
+        %td 
+          =row.author
+        %td
+          =row.name
+        %td
+          =button_to "Request Paper", { action: "request_paper", paper: row}, method: :post
 
 %h2 Papers I Requested To Review
 %table{class:"table table-striped"}
-  %tr
-    %td Author
-    %td Name
-    %td
-  - @requested.each do |row|
+  %thead
     %tr
-      %td
-        =row.author
-      %td
-        =row.name
-      %td
-        =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}
+      %th Author
+      %th Name
+      %th Action
+  %tbody
+    - @requested.each do |row|
+      %tr
+        %td
+          =row.author
+        %td
+          =row.name
+        %td
+          =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}

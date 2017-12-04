@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :papers
   has_many :paper_requests
+  has_many :assignments
+
 
   enum role: [:author, :pcc, :pcm, :admin]
   after_initialize :set_default_role, :if => :new_record?

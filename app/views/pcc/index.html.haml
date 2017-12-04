@@ -1,0 +1,47 @@
+%h1
+	PCC Dashboard
+%h3
+	Papers Not Assigned
+
+%table{class:"table table-striped"}
+	%thead
+		%tr
+			%th
+				Paper Name
+			%th
+				Paper Author
+			%th
+				Actions
+	%tbody
+
+		-@papers.each do |paper|
+			%tr
+				%td
+					=paper.name
+				%td
+					=paper.user.email
+				%td
+					=link_to "View", pcc_show_paper_path(id: paper.id)  
+
+%h3
+	Assigned Papers
+
+%table{class:"table table-striped"}
+	%thead
+		%tr
+			%th
+				Paper Name
+			%th
+				Paper Author
+			%th
+				Actions
+	%tbody
+
+		-@assigned_papers.each do |paper|
+			%tr
+				%td
+					=paper.name
+				%td
+					=paper.user.email
+				%td
+					=link_to "View", pcc_show_paper_path(id: paper.id)  

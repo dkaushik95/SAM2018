@@ -1,0 +1,62 @@
+%h1 
+	=@paper.name
+%h4
+	Status
+%p
+	=@paper.status
+%h4
+	Author
+%p
+	=@paper.author
+
+%h4 
+	Contact
+%p
+	=@paper.contact
+
+%h5
+	Versions
+
+%ul
+	-@paper.versions.each do |ver|
+		%li
+			=link_to ver.name, ver.document.url
+
+-if @requests.size != 0
+	%h3
+		Requests
+
+	%ul
+		-@requests.each do |request|
+			%li
+				=request.user.email
+
+/ -if @assignments.size != 0
+/ 	%h3
+/ 		Assigned PCMs
+/ 	%ul
+/ 		-@assignments.each do |assignment|
+/ 			%li
+/ 				=assignment.user.email
+
+%h3
+	Actions
+
+-if @paper.versions.size == 0
+	%p
+		Nothing can be done because the author has not put any versions yet. 
+-else
+	%h5
+		Assign PCM's
+	%table{class: "table"}
+		%thead
+			%th PCM
+			%th Actions
+		%tbody
+			-@users.each do |user|
+				-if not @assignments.include? user.id
+					%tr
+						%td
+							=user.email
+						%td
+							=button_to "Assign", { action: "assign_paper", paper: @paper.id, user: user.id}, method: :post
