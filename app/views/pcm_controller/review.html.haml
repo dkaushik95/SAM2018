@@ -1,0 +1,46 @@
+%h1
+	Review
+
+%h3
+	Paper name: 
+	=@paper.name
+
+%h4
+	Author
+%p
+	=@paper.author
+
+%h4
+	Contact
+%p
+	=@paper.contact
+
+%h4
+	Versions
+
+%ul
+	-@paper.versions.each do |version|
+		%li
+			=link_to version.name, version.document.url
+
+%h4 Write your review here
+
+=form_tag(pcm_controller_submit_review_path(paper: @paper), method: "post") do |f| 
+	=label_tag(:rating, "Select a value for rating")
+	%br/
+	=select_tag(:rating, '<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected>4</option><option value=\"5\">5</option>'.html_safe)
+	%br/
+	=label_tag(:review, "Write below")
+	%br/
+	=text_area_tag(:review)
+	%br/
+	=submit_tag("Submit")
+%br/
+=link_to "Back", :back
+
+
+
+
+/ =f.select :rating, options_for_select([1, 2, 3, 4, 5], 5)
+/ 	=f.text_area :review
+/ 	=f.submit "Submit Paper"

@@ -12,6 +12,7 @@ class PapersController < ApplicationController
   end
 
   def show
+    @reviews = Review.where(paper_id: params[:id])
   end
 
   def new

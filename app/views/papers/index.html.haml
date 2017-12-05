@@ -11,16 +11,10 @@
                 = time_ago_in_words(paper.created_at)
                 ago
               %ul{class: "list-group list-group-flush"}
-                - if not paper.isInReview?
-                  %li{class: "list-group-item"}
-                    %span{class:"badge badge-warning"} Paper is in Review
-                -else
-                  - if paper.isAccepted?
-                    %li{class: "list-group-item"}
-                      %span{class:"badge badge-success"} Paper is Accepted!
-                  -else
-                    %li{class: "list-group-item"}
-                      %span{class:"badge badge-danger"} Paper is Not Accepted
+                %li{class: "list-group-item"}
+                  status : 
+                  %span{class:"badge badge-success"} 
+                    =paper.status
               %br/
               =link_to "View", paper, class: "card-link"
   - else

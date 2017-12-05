@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :papers
   has_many :paper_requests
   has_many :assignments
+  has_many :reviews
 
 
   enum role: [:author, :pcc, :pcm, :admin]

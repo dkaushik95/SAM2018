@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204031802) do
+ActiveRecord::Schema.define(version: 20171205062138) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
@@ -26,8 +26,25 @@ ActiveRecord::Schema.define(version: 20171204031802) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "papers" because of following StandardError
-#   Unknown type 'status' for column 'string'
+  create_table "papers", force: :cascade do |t|
+    t.string "name"
+    t.text "author"
+    t.string "contact"
+    t.string "format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "status", default: "initial"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "paper_id"
+    t.text "review"
+    t.integer "rating"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

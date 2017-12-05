@@ -1,6 +1,5 @@
 %h1
   PCM Homepage
-TODO 
 %h2 Papers Assigned to Me to Review
 %table{class:"table table-striped"}
   %thead
@@ -12,10 +11,11 @@ TODO
     - @assignments.each do |row|
       %tr
         %td
-          =row.author
+          =row.paper.author
         %td
-          =row.name
+          =row.paper.name
         %td
+          =link_to "Review", pcm_controller_review_path(paper: row.paper)
           %button Review
 %h2 Request papers to Review
 %table{class:"table table-striped"}
@@ -50,3 +50,16 @@ TODO
           =row.name
         %td
           =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}
+
+%h2 Papers I have reviewed
+%table{class:"table table-striped"}
+  %thead
+    %th Paper
+    %th Rating
+  %tbody
+    -@reviewed.each do |review|
+      %tr
+        %td
+          =review.paper.name
+        %td
+          =review.rating

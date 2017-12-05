@@ -1,0 +1,47 @@
+%h1 
+	=@paper.name
+%h4
+	Status
+%p
+	=@paper.status
+%h4
+	Author
+%p
+	=@paper.author
+
+%h4 
+	Contact
+%p
+	=@paper.contact
+
+%h5
+	Versions
+
+%ul
+	-@paper.versions.each do |ver|
+		%li
+			=link_to ver.name, ver.document.url
+
+%h3 Reviews
+
+%table{class:"table"}
+	%thead
+		%th PCM
+		%th Rating
+		%th Review
+	%tbody
+		-@reviews.each do |review|
+			%tr
+				%td
+					=review.user.email
+				%td
+					=review.rating
+				%td
+					=review.review
+
+%h3 Verdict
+=button_to "Accept Paper", { action: "accept_paper", paper: @paper.id}, method: :post, class: "btn btn-success", data: {confirm: "Are you sure ?"}
+%br/
+=button_to "Reject Paper", { action: "reject_paper", paper: @paper.id}, method: :post, class: "btn btn-danger", data: {confirm: "Are you sure ?"}
+%br/
+=link_to "Back", :back

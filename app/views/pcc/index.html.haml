@@ -45,3 +45,40 @@
 					=paper.user.email
 				%td
 					=link_to "View", pcc_show_paper_path(id: paper.id)  
+
+%h3 Reviewed Papers
+
+%table{class:"table table-striped"}
+	%thead
+		%tr
+			%th Paper Name
+			%th Paper Author
+			%th Actions
+	%tbody
+		-@reviewed.each do |review|
+			%tr
+				%td
+					=review.name
+				%td
+					=review.author
+				%td
+					=link_to "Details/Verdict", pcc_show_review_url(paper: review)
+
+
+%h3 Accepted Papers
+
+%table{class:"table table-striped"}
+	%thead
+		%tr
+			%th Paper Name
+			%th Paper Author
+			%th Actions
+	%tbody
+		-@accepted.each do |paper|
+			%tr
+				%td
+					=paper.name
+				%td
+					=paper.author
+				%td
+					=link_to "View", pcc_show_paper_path(id: paper.id)
