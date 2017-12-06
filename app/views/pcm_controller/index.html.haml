@@ -1,65 +1,73 @@
-%h1
-  PCM Homepage
-%h2 Papers Assigned to Me to Review
-%table{class:"table table-striped"}
-  %thead
-    %tr
-      %th Author
-      %th Name
-      %th Action
-  %tbody
-    - @assignments.each do |row|
-      %tr
-        %td
-          =row.paper.author
-        %td
-          =row.paper.name
-        %td
-          =link_to "Review", pcm_controller_review_path(paper: row.paper)
-          %button Review
-%h2 Request papers to Review
-%table{class:"table table-striped"}
-  %thead
-    %tr
-      %th Author
-      %th Name
-      %th Action
-  %tbody
+%h1{class:"pcm-heading"}
+  PCM Dashboard
+%br/
+-if @assignments.any?
+  %h4{class:"pcm-heading"} Papers Assigned to Me to Review
+  .row
+    - @assignments.each do |assignment|
+      .col-sm-3
+        .card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+          .card-block
+            %h4{class: "card-title"}= assignment.paper.name
+            %p{class:"card-subtitle mb-2 text-muted"}
+              = time_ago_in_words(assignment.paper.created_at)
+              ago
+            %ul{class: "list-group list-group-flush"}
+              %li{class: "list-group-item"}
+                =assignment.paper.author
+            %br/
+            =link_to "Review", pcm_controller_review_path(paper: assignment.paper.id), class: "card-link"
+
+-if @toberequested.any?
+  %h4{class:"pcm-heading"} Request papers to Review
+  .row
     - @toberequested.each do |row|
-      %tr
-        %td 
-          =row.author
-        %td
-          =row.name
-        %td
-          =button_to "Request Paper", { action: "request_paper", paper: row}, method: :post
+      .col-sm-3
+        .card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+          .card-block
+            %h4{class: "card-title"}= row.name
+            %p{class:"card-subtitle mb-2 text-muted"}
+              = time_ago_in_words(row.created_at)
+              ago
+            %ul{class: "list-group list-group-flush"}
+              %li{class: "list-group-item"}
+                =row.author
+            %br/
+            =button_to "Request Paper", { action: "request_paper", paper: row}, method: :post, class:"btn btn-primary"
 
-%h2 Papers I Requested To Review
-%table{class:"table table-striped"}
-  %thead
-    %tr
-      %th Author
-      %th Name
-      %th Action
-  %tbody
+-if @requested.any?
+  %h4{class:"pcm-heading"} Papers I Requested To Review
+  .row
     - @requested.each do |row|
-      %tr
-        %td
-          =row.author
-        %td
-          =row.name
-        %td
-          =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}
+      .col-sm-3
+        .card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+          .card-block
+            %h4{class: "card-title"}= row.name
+            %p{class:"card-subtitle mb-2 text-muted"}
+              = time_ago_in_words(row.created_at)
+              ago
+            %ul{class: "list-group list-group-flush"}
+              %li{class: "list-group-item"}
+                =row.author
+            %br/
+            =button_to "Delete Review Request", {action: "delete_request", paper:row}, method: :delete, data: {confirm: "Are you sure ?"}, class:"btn btn-danger"
 
-%h2 Papers I have reviewed
-%table{class:"table table-striped"}
-  %thead
-    %th Paper
-    %th Rating
-  %tbody
-    -@reviewed.each do |review|
-      %tr
-        %td
-          =review.paper.name
-        %td
-          =review.rating
+-if @reviewed.any?
+  %h4{class:"pcm-heading"} Papers I have reviewed
+  .row
+    - @reviewed.each do |row|
+      .col-sm-3
+        .card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+          .card-block
+            %h4{class: "card-title"}= row.paper.name
+            %p{class:"card-subtitle mb-2 text-muted"}
+              = time_ago_in_words(row.created_at)
+              ago
+            %ul{class: "list-group list-group-flush"}
+              %li{class: "list-group-item"}
+                =row.rating
+            %br/
+            %ul{class: "list-group list-group-flush"}
+              %li{class: "list-group-item"}
+                =row.review
+            %br/

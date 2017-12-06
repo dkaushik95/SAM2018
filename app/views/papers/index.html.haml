@@ -11,10 +11,21 @@
                 = time_ago_in_words(paper.created_at)
                 ago
               %ul{class: "list-group list-group-flush"}
-                %li{class: "list-group-item"}
-                  status : 
-                  %span{class:"badge badge-success"} 
-                    =paper.status
+                -if paper.status == "accepted"
+                  %li{class: "list-group-item"}
+                    status : 
+                    %span{class:"badge badge-success"} 
+                      =paper.status
+                -elsif paper.status == "rejected"
+                  %li{class: "list-group-item"}
+                    status : 
+                    %span{class:"badge badge-danger"} 
+                      =paper.status
+                -else
+                  %li{class: "list-group-item"}
+                    status : 
+                    %span{class:"badge badge-primary"} 
+                      =paper.status
               %br/
               =link_to "View", paper, class: "card-link"
   - else

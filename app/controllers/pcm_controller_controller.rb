@@ -1,6 +1,6 @@
 class PcmControllerController < ApplicationController
 	# before_action :find_paper, only:[:show, :edit, :update, :destroy]
-	before_action :find_vars
+	before_action :find_vars 
 	before_action :authenticate_user!
 	before_action do 
 		redirect_to new_user_session_path unless current_user && current_user.pcm?
@@ -27,7 +27,7 @@ class PcmControllerController < ApplicationController
   def submit_review
     paper = params[:paper]
     review = params[:review]
-    rating = params[:rating]
+    rating = params[:rating].to_i
     if Review.create({paper_id: paper, review: review, rating: rating, user_id: current_user.id}).save()
       redirect_to pcm_controller_index_path, {notice: "Submitted"}
       pap = Paper.find(paper)
@@ -52,7 +52,7 @@ class PcmControllerController < ApplicationController
   		@toberequested = Paper.where(status: "initial")
   	else
   		@requested = Paper.where("id IN (?)", @paper_request.map(&:paper_id))
-  		@toberequested = Paper.where(" id NOT IN (?)", @paper_request.map(&:paper_id))
+  		@toberequested = Paper.where("status=='initial' and id NOT IN (?)", @paper_request.map(&:paper_id))
   	end
     @reviewed = Review.where(user_id: current_user.id)
   end

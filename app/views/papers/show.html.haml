@@ -6,7 +6,7 @@
         status : 
         %span{class:"badge badge-success"} 
           =@paper.status
-  .card-block{style: "padding:20px"}
+  .card-block{style:"padding:20px"}
     %p{:class => "card-text", style:"padding:20px"}
       Authors:
       =(@paper.author)
@@ -26,19 +26,25 @@
       %p{class: "badge badge-info"} No versions yet. 
     %br/
     %br/
-    -if @paper.status == "accepted" or @paper.status == "rejected"
-      %h3 Reviews
-      %table{class:"table"}
-        %thead
-          %th Rating
-          %th Review
-        %tbody
-          -@reviews.each do |review|
-            %tr
-              %td
-                =review.rating
-              %td
-                =review.review
-    -else
-      =link_to :Edit, edit_paper_path, class: "btn btn-primary"
-      =link_to "Back", papers_path, class: "btn btn-primary"
+
+-if @paper.status == "accepted" or @paper.status == "rejected"
+  %h1{style: "text-align:center"} Reviews
+  .row
+    -@reviews.each do |review|
+      .col-sm-6
+        .card{class:"text-center", style:"box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+          .card-header
+            %h4
+              =review.rating
+          .card-block{style:"padding:20px;"}
+            %p
+              =review.review
+  %div{align:"center", style:"margin-top:30px;"}
+    =link_to "Back", papers_path, class: "btn btn-primary"
+-elsif @paper.status == "reviewed"
+  %div{align:"center", style:"margin-top:30px;"}
+    =link_to "Back", papers_path, class: "btn btn-primary"
+-else
+  %div{align:"center", style:"margin-top:30px;"}
+    =link_to :Edit, edit_paper_path, class: "btn btn-primary"
+    =link_to "Back", papers_path, class: "btn btn-primary"

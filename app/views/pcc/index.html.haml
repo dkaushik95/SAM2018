@@ -1,84 +1,73 @@
-%h1
-	PCC Dashboard
-%h3
-	Papers Not Assigned
+%h1{class:"pcm-heading"} PCC Dashboard
 
-%table{class:"table table-striped"}
-	%thead
-		%tr
-			%th
-				Paper Name
-			%th
-				Paper Author
-			%th
-				Actions
-	%tbody
+-if @papers.any?
+	%h3{class:"pcm-heading"} Papers Not Assigned
+	.row
+		- @papers.each do |paper|
+			.col-sm-3
+				.card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+					.card-block
+						%h4{class: "card-title"}= paper.name
+						%p{class:"card-subtitle mb-2 text-muted"}
+							= time_ago_in_words(paper.created_at) 
+							ago
+						%ul{class: "list-group list-group-flush"}
+							%li{class: "list-group-item"}
+								\-
+								=paper.author
+						%br/
+						=link_to "View", pcc_show_paper_path(id: paper.id), class: "card-link"
 
-		-@papers.each do |paper|
-			%tr
-				%td
-					=paper.name
-				%td
-					=paper.user.email
-				%td
-					=link_to "View", pcc_show_paper_path(id: paper.id)  
+-if @assigned_papers.any?
+	%h3{class:"pcm-heading"} Assigned Papers
+	.row
+		- @assigned_papers.each do |paper|
+			.col-sm-3
+				.card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+					.card-block
+						%h4{class: "card-title"}= paper.name
+						%p{class:"card-subtitle mb-2 text-muted"}
+							= time_ago_in_words(paper.created_at) 
+							ago
+						%ul{class: "list-group list-group-flush"}
+							%li{class: "list-group-item"}
+								\-
+								=paper.author
+						%br/
+						=link_to "View", pcc_show_paper_path(id: paper.id), class: "card-link"
 
-%h3
-	Assigned Papers
+-if @reviewed.any?
+	%h3{class:"pcm-heading"} Reviewed Papers
+	.row
+		- @reviewed.each do |paper|
+			.col-sm-3
+				.card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+					.card-block
+						%h4{class: "card-title"}= paper.name
+						%p{class:"card-subtitle mb-2 text-muted"}
+							= time_ago_in_words(paper.created_at) 
+							ago
+						%ul{class: "list-group list-group-flush"}
+							%li{class: "list-group-item"}
+								\-
+								=paper.author
+						%br/
+						=link_to "Details/Verdict", pcc_show_review_url(paper: paper), class: "card-link"
 
-%table{class:"table table-striped"}
-	%thead
-		%tr
-			%th
-				Paper Name
-			%th
-				Paper Author
-			%th
-				Actions
-	%tbody
-
-		-@assigned_papers.each do |paper|
-			%tr
-				%td
-					=paper.name
-				%td
-					=paper.user.email
-				%td
-					=link_to "View", pcc_show_paper_path(id: paper.id)  
-
-%h3 Reviewed Papers
-
-%table{class:"table table-striped"}
-	%thead
-		%tr
-			%th Paper Name
-			%th Paper Author
-			%th Actions
-	%tbody
-		-@reviewed.each do |review|
-			%tr
-				%td
-					=review.name
-				%td
-					=review.author
-				%td
-					=link_to "Details/Verdict", pcc_show_review_url(paper: review)
-
-
-%h3 Accepted Papers
-
-%table{class:"table table-striped"}
-	%thead
-		%tr
-			%th Paper Name
-			%th Paper Author
-			%th Actions
-	%tbody
-		-@accepted.each do |paper|
-			%tr
-				%td
-					=paper.name
-				%td
-					=paper.author
-				%td
-					=link_to "View", pcc_show_paper_path(id: paper.id)
+-if @accepted.any?
+	%h3{class:"pcm-heading"} Accepted Papers
+	.row
+		- @accepted.each do |paper|
+			.col-sm-3
+				.card{style: "margin-top: 20px; padding:10px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+					.card-block
+						%h4{class: "card-title"}= paper.name
+						%p{class:"card-subtitle mb-2 text-muted"}
+							= time_ago_in_words(paper.created_at) 
+							ago
+						%ul{class: "list-group list-group-flush"}
+							%li{class: "list-group-item"}
+								\-
+								=paper.author
+						%br/
+						=link_to "View", pcc_show_paper_path(id: paper.id), class: "card-link"

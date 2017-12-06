@@ -1,46 +1,47 @@
-%h1
+%h1{class:"pcm-heading"}
 	Review
 
-%h3
-	Paper name: 
-	=@paper.name
 
-%h4
-	Author
-%p
-	=@paper.author
+.card{class:"text-left", style: "box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+	.card-header
+		%ul{class: "list-group list-group-flush"}
+			%li{class: "list-group-item"}
+				status : 
+				%span{class:"badge badge-success"} 
+					=@paper.status
+	.card-block{style:"padding:20px"}
+		%p{:class => "card-text", style:"padding:20px"}
+			Authors:
+			=(@paper.author)
+		%p{:class => "card-text", style:"padding:20px"}
+			Contact:
+			=(@paper.contact)
+		%p{:class => "card-text", style:"padding:20px"}
+			Format:
+			=(@paper.format)
+		- if @paper.versions.any?
+			%h3 Versions
+			%ul{class: "list-group list-group-flush"}
+			- @paper.versions.each do |ver|
+				%li{class: "list-group-item"}
+					=link_to ver.name + "   ( " + ver.document_file_name + " )", ver.document.url
+		-else
+			%p{class: "badge badge-info"} No versions yet. 
+			%br/
+			%br/
 
-%h4
-	Contact
-%p
-	=@paper.contact
 
-%h4
-	Versions
-
-%ul
-	-@paper.versions.each do |version|
-		%li
-			=link_to version.name, version.document.url
-
-%h4 Write your review here
+%h4{class:"pcm-heading"} Write your review here
 
 =form_tag(pcm_controller_submit_review_path(paper: @paper), method: "post") do |f| 
 	=label_tag(:rating, "Select a value for rating")
 	%br/
-	=select_tag(:rating, '<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected>4</option><option value=\"5\">5</option>'.html_safe)
+	=number_field_tag :rating, nil, min: 1, max: 5
 	%br/
 	=label_tag(:review, "Write below")
 	%br/
 	=text_area_tag(:review)
 	%br/
-	=submit_tag("Submit")
+	=submit_tag("Submit", class:"btn btn-primary")
 %br/
 =link_to "Back", :back
-
-
-
-
-/ =f.select :rating, options_for_select([1, 2, 3, 4, 5], 5)
-/ 	=f.text_area :review
-/ 	=f.submit "Submit Paper"

@@ -1,54 +1,147 @@
-%h1 
-	=@paper.name
-%h4
-	Status
-%p
-	=@paper.status
-%h4
-	Author
-%p
-	=@paper.author
-
-%h4 
-	Contact
-%p
-	=@paper.contact
-
-%h5
-	Versions
-
-%ul
-	-@paper.versions.each do |ver|
-		%li
-			=link_to ver.name, ver.document.url
-
--if @paper.status != "accepted"
-	-if @requests.size != 0
-		%h3
-			Requests
-
+%h1{style: "text-align:center"}=@paper.name
+.card{class:"text-left", style: "box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+	.card-header
+		%ul{class: "list-group list-group-flush"}
+			%li{class: "list-group-item"}
+				status : 
+				%span{class:"badge badge-success"} 
+					=@paper.status
+	.card-block{style:"padding:20px"}
+		%p{:class => "card-text", style:"padding:20px"}
+			Authors:
+			=(@paper.author)
+		%p{:class => "card-text", style:"padding:20px"}
+			Contact:
+			=(@paper.contact)
+		%p{:class => "card-text", style:"padding:20px"}
+			Format:
+			=(@paper.format)
+		- if @paper.versions.any?
+			%h3 Versions
+			%ul{class: "list-group list-group-flush"}
+				- @paper.versions.each do |ver|
+					%li{class: "list-group-item"}
+						=link_to ver.name + "   ( " + ver.document_file_name + " )", ver.document.url
+		-else
+			%p{class: "badge badge-info"} No versions yet. 
+		%br/
+		%br/
+		-if @requests.any?
+			%h3 Requests
+			%ul{class: "list-group list-group-flush"}
+				-@requests.each do |request|
+					%li{class: "list-group-item"}
+						=request.user.email
+-if @paper.status == "accepted"
+	%h1{style: "text-align:center"} Reviews
+	.row
+		-@paper.reviews.each do |review|
+			.col-sm-6
+				.card{class:"text-center", style:"box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+					.card-header
+						%h4=review.rating
+					.card-block{style:"padding:20px;"}
+					%p
+						=review.review
+					%i
+						\-
+						=review.user.email
+-else
+	%h3{style: "text-align:center"}Actions
+	-if not @paper.versions.any?
+		%p Nothing can be done because the author has not put any versions yet.
+	-elsif @paper.status == "assigned"
+		Assigned PCM's
 		%ul
-			-@requests.each do |request|
+			-@assignments.each do |assignment|
 				%li
-					=request.user.email
-	%h3
-		Actions
-
-	-if @paper.versions.size == 0
-		%p
-			Nothing can be done because the author has not put any versions yet. 
+					=assignment.user.email
+		Assign more PCM's
+		%ul
+			-@users.each do |user|
+				-if not @assignments.map(&:user_id).include? user.id
+					%tr
+						%td=user.email
+						%td=button_to "Assign", { action: "assign_paper", paper: @paper.id, user: user.id}, method: :post
+					
 	-else
-		%h5
-			Assign PCM's
+		%h5 Assign PCM's
 		%table{class: "table"}
 			%thead
 				%th PCM
 				%th Actions
 			%tbody
 				-@users.each do |user|
-					-if not @assignments.include? user.id
+					-if not @assignments.map(&:user_id).include? user.id
 						%tr
-							%td
-								=user.email
-							%td
-								=button_to "Assign", { action: "assign_paper", paper: @paper.id, user: user.id}, method: :post
+							%td=user.email
+							%td=button_to "Assign", { action: "assign_paper", paper: @paper.id, user: user.id}, method: :post
+
+/ -if @paper.status == "accepted" or @paper.status == "rejected"
+/ 	%h1{style: "text-align:center"} Reviews
+/ 	.row
+/ 		-@reviews.each do |review|
+/ 			.col-sm-6
+/ 				.card{class:"text-center", style:"box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);"}
+/ 					.card-header
+/ 						%h4
+/ 							=review.rating
+/ 					.card-block{style:"padding:20px;"}
+/ 						%p
+/ 							=review.review
+/ 	%div{align:"center", style:"margin-top:30px;"}
+/ 		=link_to "Back", papers_path, class: "btn btn-primary"
+/ %h1 
+/ 	=@paper.name
+/ %h4
+/ 	Status
+/ %p
+/ 	=@paper.status
+/ %h4
+/ 	Author
+/ %p
+/ 	=@paper.author
+
+/ %h4 
+/ 	Contact
+/ %p
+/ 	=@paper.contact
+
+/ %h5 
+/ 	Versions
+
+/ %ul
+/ 	-@paper.versions.each do |ver|
+/ 		%li
+/ 			=link_to ver.name, ver.document.url
+
+/ -if @paper.status != "accepted"
+/ 	-if @requests.size != 0
+/ 		%h3
+/ 			Requests
+
+/ 		%ul
+/ 			-@requests.each do |request|
+/ 				%li
+/ 					=request.user.email
+/ 	%h3
+/ 		Actions
+
+/ 	-if @paper.versions.size == 0
+/ 		%p
+/ 			Nothing can be done because the author has not put any versions yet. 
+/ 	-else
+/ 		%h5
+/ 			Assign PCM's
+/ 		%table{class: "table"}
+/ 			%thead
+/ 				%th PCM
+/ 				%th Actions
+/ 			%tbody
+/ 				-@users.each do |user|
+/ 					-if not @assignments.include? user.id
+/ 						%tr
+/ 							%td
+/ 								=user.email
+/ 							%td
+/ 								=button_to "Assign", { action: "assign_paper", paper: @paper.id, user: user.id}, method: :post
