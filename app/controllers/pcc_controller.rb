@@ -10,8 +10,8 @@ class PccController < ApplicationController
 		@users = User.where(role: "pcm")
 		@paper = Paper.find(params[:id])
 		@requests = PaperRequest.where(paper_id: params[:id])
-		@assignments = Assignment.where(paper_id: params[:id])
-		
+		assignments = Assignment.where(paper_id: params[:id])
+		@assignments = assignments.map(&:user_id)
 	end
 
 	def show_review
